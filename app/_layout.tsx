@@ -19,6 +19,8 @@ export default function RootLayout() {
     // SafeAreaProvider : 앱 환경일 때 최상단에 휴대폰 OS 상태바가 들어가기 때문에 그것에 가려지지 않도록
     //                    앱 전체를 감싸주는 컴포넌트
     // StatusBar : 앱 환경일 때 최상단에 휴대폰 OS 상태바를 커스텀할 수 있는 컴포넌트
+    //
+    // SafeAreaView : SafeAreaProvider로 감싼 직계 자식에서는 View를 쓰지 못 하고 SafeAreaView를 써야함
     return (
         <SafeAreaProvider>
             <StatusBar style={theme === "dark" ? "light" : "dark"} />

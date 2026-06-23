@@ -38,8 +38,6 @@ function MainHeader() {
                         </Button>
                     </Link>
                 </View>
-                {/* 로그인 버튼 */}
-                {/* 회원가입 */}
             </View>
         </View>
     );

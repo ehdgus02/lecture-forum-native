@@ -10,6 +10,8 @@ import ErrorMessage from "@/components/common/form/ErrorMessage";
 import Button from "@/components/common/button/Button";
 import userApi from "@/api/user/userApi";
 import { isAxiosError } from "axios";
+import TextComponent from "@/components/common/text/TextComponent";
+import SelectGroup from "@/components/common/select/SelectGroup";
 
 function AuthRegisterPage() {
     // React에서는 useNavigate() 준비를 해뒀었는데, React-Native에서는 useRouter();
@@ -93,9 +95,10 @@ function AuthRegisterPage() {
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps={"handled"}>
                 <Card className={twMerge("w-full", "max-w-md", "my-8")}>
-                    <Text className={twMerge("mb-6", ["text-2xl", "font-bold", "text-center"])}>
+                    <TextComponent
+                        className={twMerge("mb-6", ["text-2xl", "font-bold", "text-center"])}>
                         회원가입
-                    </Text>
+                    </TextComponent>
 
                     {/*
                         react-hook-form에서 register를 꺼내서 사용하는 방법은 한 방에 처리하는 편의기능
@@ -250,7 +253,25 @@ function AuthRegisterPage() {
                         }}
                     />
 
-                    {/* 성별 입력 Select는 내일 합시다 */}
+                    <Controller
+                        control={control}
+                        name={"gender"}
+                        render={({ field: { onChange, value } }) => {
+                            return (
+                                <SelectGroup
+                                    options={[
+                                        { label: "남성", value: "MALE" },
+                                        { label: "여성", value: "FEMALE" },
+                                    ]}
+                                    label={"성별"}
+                                    placeholder={"성별을 선택해주세요"}
+                                    value={value}
+                                    onSelect={onChange}
+                                    errorMessage={errors.gender?.message}
+                                />
+                            );
+                        }}
+                    />
 
                     {errors.root?.message && (
                         <ErrorMessage className={twMerge("text-center", "mt-2", "mb-4")}>

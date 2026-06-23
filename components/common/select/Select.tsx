@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import TextComponent from "@/components/common/text/TextComponent";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { BlurView } from "expo-blur";
 
 export interface SelectOptionType {
     label: string;
@@ -55,7 +54,6 @@ function Select({
                     className,
                 )}
                 onPress={() => {
-                    console.log("!");
                     setIsOpen(!isOpen);
                 }}>
                 <TextComponent

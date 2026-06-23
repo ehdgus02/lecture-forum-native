@@ -2,6 +2,7 @@ import { Slot } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { twMerge } from "tailwind-merge";
 import AdminAsideDesktop from "@/components/layouts/admin/AdminAsideDesktop";
+import AdminAsideMobile from "@/components/layouts/admin/AdminAsideMobile";
 
 function AdminLayout() {
     // tailwind를 통해서 "반응형 디자인"을 적용 시키는 것은
@@ -17,7 +18,9 @@ function AdminLayout() {
                 <AdminAsideDesktop />
             </View>
 
-            {/* TODO: 관리자용 모바일 메뉴 추가 */}
+            <View className={twMerge("flex", "md:hidden", "w-full", "z-50")}>
+                <AdminAsideMobile />
+            </View>
 
             <View className={"flex-1"}>
                 <ScrollView

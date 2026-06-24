@@ -1,9 +1,9 @@
-import { Modal, Pressable, View } from "react-native";
+import { Modal, Pressable, useWindowDimensions, View } from "react-native";
 import { twMerge } from "tailwind-merge";
 import { Link, usePathname } from "expo-router";
 import TextComponent from "@/components/common/text/TextComponent";
 import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores/auth/useAuthStore";
 import { ADMIN_NAV_LIST } from "@/constants/menu";
 import Button from "@/components/common/button/Button";
@@ -12,6 +12,15 @@ function AdminAsideMobile() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
     const { user, logout } = useAuthStore();
+
+    // useWindowDimensions : 화면의 정보를 실시간으로 가져오는 hooks
+    // width, height, scale 같은 것들을 실시간으로 꺼내올 수 있음
+    const { width } = useWindowDimensions();
+    useEffect(() => {
+        if (width >= 768 && isMenuOpen) {
+            setIsMenuOpen(false);
+        }
+    }, [width, isMenuOpen]);
 
     return (
         <>

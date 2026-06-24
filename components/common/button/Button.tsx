@@ -55,7 +55,7 @@ function Button({
             {typeof children === "string" ? (
                 <Text
                     className={twMerge(
-                        "font-bold text-sm",
+                        "font-bold",
                         getTextColorClasses(),
                         size === "small" ? "text-xs" : size === "large" ? "text-base" : "text-sm",
                     )}>

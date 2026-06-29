@@ -10,6 +10,8 @@ import { twMerge } from "tailwind-merge";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MYPAGE_NAV_LIST } from "@/constants/menu";
+import { Role } from "@/types/user";
+import Button from "@/components/common/button/Button";
 
 function MainHeaderMobile() {
     const router = useRouter();
@@ -33,6 +35,16 @@ function MainHeaderMobile() {
 
         loadCategories().then(() => {});
     }, []);
+
+    const handleNavigate = (path: string) => {
+        setIsMenuOpen(false);
+        router.push(path);
+    };
+
+    const handleLogout = () => {
+        setIsMenuOpen(false);
+        logout();
+    }
 
     return (
         <View
@@ -93,23 +105,23 @@ function MainHeaderMobile() {
                             ["w-full", "px-4", "h-16"],
                             ["border-b", "border-divider"],
                         )}>
-                        <Link href={"/"} asChild>
-                            <Pressable className={twMerge("flex-row", "items-center", "gap-2")}>
-                                <Ionicons
-                                    name={"chatbubbles"}
-                                    size={26}
-                                    className={"text-primary-main"}
-                                />
-                                <TextComponent
-                                    className={twMerge([
-                                        "text-xl",
-                                        "font-extrabold",
-                                        "text-primary-main",
-                                    ])}>
-                                    토론대난투
-                                </TextComponent>
-                            </Pressable>
-                        </Link>
+                        <Pressable
+                            className={twMerge("flex-row", "items-center", "gap-2")}
+                            onPress={() => handleNavigate("/")}>
+                            <Ionicons
+                                name={"chatbubbles"}
+                                size={26}
+                                className={"text-primary-main"}
+                            />
+                            <TextComponent
+                                className={twMerge([
+                                    "text-xl",
+                                    "font-extrabold",
+                                    "text-primary-main",
+                                ])}>
+                                토론대난투
+                            </TextComponent>
+                        </Pressable>
 
                         <Pressable
                             onPress={() => setIsMenuOpen(false)}
@@ -148,7 +160,7 @@ function MainHeaderMobile() {
                                         ["px-8", "py-3"],
                                         ["active:bg-background-default", "transition-all"],
                                     )}
-                                    onPress={() => router.push(`/categories/${item.id}`)}>
+                                    onPress={() => handleNavigate(`/categories/${item.id}`)}>
                                     <TextComponent className={twMerge("font-medium")}>
                                         {item.name}
                                     </TextComponent>
@@ -156,7 +168,7 @@ function MainHeaderMobile() {
                             ))}
 
                             <Pressable
-                                onPress={() => router.push("/notices")}
+                                onPress={() => handleNavigate("/notices")}
                                 className={twMerge(
                                     ["px-8", "py-3"],
                                     ["active:bg-background-default", "transition-all"],
@@ -189,7 +201,7 @@ function MainHeaderMobile() {
                                         return (
                                             <View key={index}>
                                                 <Pressable
-                                                    onPress={() => router.push(item.path)}
+                                                    onPress={() => handleNavigate(item.path)}
                                                     className={twMerge(
                                                         [
                                                             "flex-row",
@@ -224,7 +236,7 @@ function MainHeaderMobile() {
                     </ScrollView>
 
                     {/* 사용자 부분 */}
-                    <View className={twMerge(["mt-4", "pt-4", "border-t", "border-divider"])}>
+                    <View className={twMerge(["mt-4", "p-4", "border-t", "border-divider"])}>
                         {isLoggedIn ? (
                             <View
                                 className={twMerge(
@@ -246,10 +258,46 @@ function MainHeaderMobile() {
                                             {user?.email}
                                         </TextComponent>
                                     </View>
+                                    {user?.role === Role.ADMIN && (
+                                        <Pressable
+                                            onPress={() => handleNavigate("/admin")}
+                                            className={twMerge(
+                                                ["p-2", "border", "border-divider"],
+                                                ["rounded-full", "bg-background-paper"],
+                                            )}>
+                                            <Ionicons
+                                                name={"shield"}
+                                                size={20}
+                                                className={"text-primary-main"}
+                                            />
+                                        </Pressable>
+                                    )}
                                 </View>
+                                <Button
+                                    fullWidth
+                                    variant={"contained"}
+                                    color={"error"}
+                                    onPress={handleLogout}>
+                                    로그아웃
+                                </Button>
                             </View>
                         ) : (
-                            <></>
+                            <View className={twMerge("flex-row", "gap-3")}>
+                                <Button
+                                    className={"flex-1"}
+                                    variant={"outlined"}
+                                    color={"primary"}
+                                    onPress={() => handleNavigate("/auth/login")}>
+                                    로그인
+                                </Button>
+                                <Button
+                                    className={"flex-1"}
+                                    variant={"contained"}
+                                    color={"primary"}
+                                    onPress={() => handleNavigate("/auth/register")}>
+                                    회원가입
+                                </Button>
+                            </View>
                         )}
                     </View>
                 </SafeAreaView>

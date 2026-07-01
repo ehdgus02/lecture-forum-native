@@ -101,7 +101,7 @@ function NoticeListPage() {
                                         key={index}
                                         className={twMerge(
                                             ["flex-row", "items-center"],
-                                            ["px-4", "py-4", "transition-color"],
+                                            ["px-4", "py-4", "transition-colors"],
                                             ["hover:bg-background-default"],
                                             !isLast && ["border-b", "border-divider"],
                                         )}>

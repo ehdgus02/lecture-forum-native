@@ -52,6 +52,7 @@ function Dropdown({ trigger, children, className, dropdownClassName }: DropdownP
                         className={twMerge(
                             // top, left, right, bottom 은 부모 기준
                             // translate는 내가 기준
+                            // "left-1/2", "-translate-x-1/2",
                             ["absolute", "top-full", "right-0"],
                             ["mt-2", "z-50", "min-w-[150px]", "shadow-md"],
                             ["bg-background-paper", "border", "border-divider", "rounded-lg"],

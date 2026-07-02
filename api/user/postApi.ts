@@ -1,6 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 import { PaginationResponseType } from "@/types/common";
-import { PostListItemType } from "@/types/post";
+import { PostListItemType, Post } from "@/types/post";
+import { PostInputType } from "@/schemas/post/postSchema";
 
 const getPostsByCategory = async (
     categoryId: number,
@@ -16,6 +17,12 @@ const getPostsByCategory = async (
     return response.data.data;
 };
 
+const createPost = async (input: PostInputType): Promise<Post> => {
+    const response = await axiosInstance.post("/post/create", input);
+    return response.data.data;
+};
+
 export default {
     getPostsByCategory,
+    createPost,
 };
